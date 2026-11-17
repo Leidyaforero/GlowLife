@@ -21,3 +21,12 @@ export const sessions = pgTable('finance_sessions', {
 export const challenges = pgTable('finance_challenges', {
   id: text().primaryKey(), owner: text(), challenge: text().notNull(), kind: text().notNull(), origin: text().notNull(), expiresAt: timestamp('expires_at').notNull(),
 });
+export const accounts = pgTable('finance_accounts', {
+  id: text().primaryKey(), username: text().notNull().unique(), passwordHash: text('password_hash').notNull(),
+  recoveryIdentityId: text('recovery_identity_id').unique(), recoveryEmail: text('recovery_email'),
+  pendingIdentityId: text('pending_identity_id'), pendingEmail: text('pending_email'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+export const authLimits = pgTable('finance_auth_limits', {
+  id: text().primaryKey(), attempts: integer().notNull().default(0), windowStart: timestamp('window_start').defaultNow().notNull(),
+});
