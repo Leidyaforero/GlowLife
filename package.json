@@ -1,0 +1,25 @@
+{
+  "name": "glowlife",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^11.1.9",
+    "@netlify/database": "^2.0.3",
+    "@netlify/identity": "^2.0.1",
+    "@simplewebauthn/browser": "^14.0.0",
+    "@simplewebauthn/server": "^14.1.0",
+    "drizzle-orm": "^1.0.0-beta.22"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "drizzle-kit": "^1.0.0-beta.22",
+    "tsx": "^4.23.15"
+  },
+  "scripts": {
+    "test": "node --import tsx --test tests/finance.test.mjs tests/finance-api.test.mjs",
+    "test:browser": "node tests/finance-browser.mjs"
+  }
+}
