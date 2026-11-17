@@ -59,7 +59,7 @@ const hb=()=>{if(S.h.d!=today())S.h={d:today(),a:[0,0,0]};return S.h.a};
 function render(){if(!S.name)return onb();const v={home,fin,life,cal,insp}[S.tab]();
 const N=[['home','Inicio','house'],['fin','Finanzas','wallet'],['life','Vida & Metas','tasks'],['cal','Calendario','cal'],['insp','Inspiración','spark']];
 $('#app').innerHTML=`<header><div><b>GlowLife</b></div><div class="row"><span class="chip">${I('flame',14)} ${streak()}d</span><button class="ic b2" style="border:1px solid var(--bd);cursor:pointer;font:700 16px inherit;color:var(--pri)" onclick="prof()" aria-label="Perfil">${E(S.name[0].toUpperCase())}</button></div></header><main>${v}</main><nav>${N.map(n=>`<button class="${S.tab==n[0]?'on':''}" onclick="S.tab='${n[0]}';save();render();
-if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}scrollTo(0,0)"><span>${I(n[2])}</span>${n[1]}</button>`).join('')}</nav>`;document.querySelectorAll('.fab').forEach(b=>b.innerHTML=I('plus',26));if(S.tab=='insp')loadM()}
+scrollTo(0,0)"><span>${I(n[2])}</span>${n[1]}</button>`).join('')}</nav>`;document.querySelectorAll('.fab').forEach(b=>b.innerHTML=I('plus',26));if(S.tab=='insp')loadM()}
 function onb(){$('#app').innerHTML=`<div class="ob"><div style="color:var(--sec);display:grid;place-items:center">${I('spark',64)}</div><h1>GlowLife</h1><p class="mu" style="font-size:14px">Tu espacio para organizar finanzas, estudio y metas.</p><input id="nm" placeholder="¿Cómo te llamas?" maxlength="30" autocomplete="given-name"><button class="b" onclick="go()">Comenzar</button><p class="mu">${ok?'Tus datos se guardan en este dispositivo.':'Aviso: este navegador no permite guardar datos.'}</p></div>`}
 function go(){const n=$('#nm').value.trim();if(!n)return toast('Escribe tu nombre');S.name=n;save();render()}
 document.addEventListener('keydown',e=>{if(e.key=='Enter'&&document.activeElement.id=='nm')go()});
@@ -136,5 +136,10 @@ function prof(){sheet(`<h2 style="margin:0">Mi perfil</h2><input id="pnm" value=
 function bc(){const i=$('#bk');i.select();try{navigator.clipboard.writeText(i.value)}catch(e){document.execCommand('copy')}toast('Copiado')}
 function br(){try{const o=JSON.parse($('#bk').value);if(!o.name)throw 0;S=Object.assign(def(),o);save();shut();render();toast('Datos restaurados')}catch(e){toast('Texto no válido')}}
 function wp(b){if(b.dataset.s){S=def();try{localStorage.removeItem(K)}catch(e){}shut();render()}else{b.dataset.s=1;b.textContent='Toca otra vez para confirmar'}}
-render();
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('GlowLife instalada correctamente:', reg.scope))
+        .catch(err => console.error('Error Service Worker:', err));
+}
+  render();
 </script></body></html>
